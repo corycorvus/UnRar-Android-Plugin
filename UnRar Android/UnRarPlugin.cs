@@ -77,7 +77,7 @@ public static class UnRarPlugin
 
         System.IO.FileInfo arcFile = new System.IO.FileInfo(archive);
 
-        string destination = arcFile.Directory.Name + "/" + arcFile.Name;
+        string destination = arcFile.Directory.FullName + "/" + System.IO.Path.GetFileNameWithoutExtension(arcFile.FullName);
 
         if (createFolder)
             System.IO.Directory.CreateDirectory(destination);
