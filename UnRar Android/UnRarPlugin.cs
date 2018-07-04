@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using System.IO;
+
 
 // Requires junrar library .jar
 // tested: junrar-2.0.0.jar
@@ -18,13 +20,13 @@ public static class UnRarPlugin
     /// <param name="destination">Destination path</param>
     public static void UnRar(string archive, string destination)
     {
-        if (!System.IO.File.Exists(archive))
+        if (!File.Exists(archive))
         {
             Debug.LogWarning("Rar Archive does not exist");
             return;
         }
 
-        if (!System.IO.Directory.Exists(destination))
+        if (!Directory.Exists(destination))
         {
             Debug.LogWarning("Rar Destination does not exist");
             return;
@@ -41,19 +43,18 @@ public static class UnRarPlugin
     /// <param name="createDestination">Create folder for destination</param>
     public static void UnRar(string archive, string destination, bool createDestination)
     {
-        if (!System.IO.File.Exists(archive))
+        if (!File.Exists(archive))
         {
             Debug.LogWarning("Rar Archive does not exist");
             return;
         }
 
-        if (!System.IO.Directory.Exists(destination))
+        if (!Directory.Exists(destination))
         {
-            System.IO.Directory.CreateDirectory(destination);
+            Directory.CreateDirectory(destination);
         }
 
-
-        if (!System.IO.Directory.Exists(destination))
+        if (!Directory.Exists(destination))
         {
             Debug.LogWarning("Rar Destination does not exist");
             return;
@@ -69,24 +70,23 @@ public static class UnRarPlugin
     /// <param name="createFolder">Create folder or extract here</param>
     public static void UnRar(string archive, bool createFolder)
     {
-        if (!System.IO.File.Exists(archive))
+        if (!File.Exists(archive))
         {
             Debug.LogWarning("Rar Archive does not exist");
             return;
         }
 
-        System.IO.FileInfo arcFile = new System.IO.FileInfo(archive);
-
-        string destination = arcFile.Directory.FullName + "/" + System.IO.Path.GetFileNameWithoutExtension(arcFile.FullName);
+        FileInfo arcFile = new FileInfo(archive);
+        string destination = arcFile.Directory.Name + "/" + arcFile.Name;
 
         if (createFolder)
-            System.IO.Directory.CreateDirectory(destination);
+            Directory.CreateDirectory(destination);
         else
         {
             destination = arcFile.Directory.Name;
         }
 
-        if (!System.IO.Directory.Exists(destination))
+        if (!Directory.Exists(destination))
         {
             Debug.LogWarning("Rar Destination does not exist");
             return;
@@ -94,7 +94,6 @@ public static class UnRarPlugin
 
         Extract(archive, destination);
     }
-
 
     static void Extract(string archive, string destination)
     {
@@ -115,5 +114,4 @@ public static class UnRarPlugin
 #if UNITY_IOS && !UNITY_EDITOR
 #endif
     }
-
 }
